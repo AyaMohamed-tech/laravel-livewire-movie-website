@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,3 +30,9 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->get('/admin',[AdminController::class,'index'])->name('admin.index');

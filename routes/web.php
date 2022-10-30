@@ -1,6 +1,13 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Livewire\CastIndex;
+use App\Http\Livewire\EpisodeIndex;
+use App\Http\Livewire\GenreIndex;
+use App\Http\Livewire\MovieIndex;
+use App\Http\Livewire\SeasonIndex;
+use App\Http\Livewire\SerieIndex;
+use App\Http\Livewire\TagIndex;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,9 +24,21 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/admin', function () {
-    return 'admin';
-})->middleware('role:admin')->name('admin.index');
+
+Route::middleware([
+    'auth:sanctum',
+    'verified',
+    'role:admin'
+])->prefix('admin')->name('admin.')->group(function(){
+    Route::get('/',[AdminController::class,'index'])->name('index');
+    Route::get('movies',MovieIndex::class)->name('movies.index');
+    Route::get('series',SerieIndex::class)->name('series.index');
+    Route::get('series/{serie}/seasons',SeasonIndex::class)->name('seasons.index');
+    Route::get('series/{serie}/seasons/{season}/episodes',EpisodeIndex::class)->name('episodes.index');
+    Route::get('genres',GenreIndex::class)->name('genres.index');
+    Route::get('casts',CastIndex::class)->name('casts.index');
+    Route::get('tags',TagIndex::class)->name('tags.index');
+});
 
 Route::middleware([
     'auth:sanctum',
@@ -30,9 +49,3 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
-
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->get('/admin',[AdminController::class,'index'])->name('admin.index');

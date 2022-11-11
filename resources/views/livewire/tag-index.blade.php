@@ -7,22 +7,28 @@
         <table class="w-full">
           <thead>
             <tr class="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
-              <th class="px-4 py-3">Title</th>
-              <th class="px-4 py-3">Date</th>
-              <th class="px-4 py-3">Rating</th>
-              <th class="px-4 py-3">Public</th>
+              <th class="px-4 py-3">Name</th>
+              <th class="px-4 py-3">Slug</th>
               <th class="px-4 py-3">Manage</th>
             </tr>
           </thead>
           <tbody class="bg-white">
+            @forelse($tags as $tag)
             <tr class="text-gray-700">
-
-              <td class="px-4 py-3 text-ms border">Title hire</td>
-              <td class="px-4 py-3 text-xs border">Date hire</td>
-              <td class="px-4 py-3 text-sm border">Rating hire</td>
-              <td class="px-4 py-3 text-sm border">Public</td>
-              <td class="px-4 py-3 text-sm border">Edit/Delete</td>
+              <td class="px-4 py-3 text-ms border">{{ $tag->tag_name }}</td>
+              <td class="px-4 py-3 text-xs border">{{ $tag->slug }}</td>
+              <td class="px-4 py-3 text-sm border">
+                <button  class="inline-flex justify-center rounded-md border border-transparent bg-green-500 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 ">Edit</button>
+                <button  class="inline-flex justify-center rounded-md border border-transparent bg-red-500 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 ">Delete</button>
+              </td>
             </tr>
+            @empty
+              <tr class="text-gray-700">
+                <td class="px-4 py-3 text-ms border">
+                  Empty
+                </td>
+              </tr>
+            @endforelse
           </tbody>
         </table>
       </div>
@@ -57,4 +63,6 @@
       </x-slot>
     </x-jet-dialog-modal>
   </section>
+
+
 

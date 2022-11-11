@@ -10,6 +10,8 @@ class TagIndex extends Component
 {
     public $showTagModal=false;
     public $tagName;
+    
+    public $tags = [];
 
     public function createTag()
     {
@@ -20,16 +22,24 @@ class TagIndex extends Component
 
         $this->reset();
     }
+
+    public function mount(){
+        $this->tags = Tag::all();
+    }
+
     public function showCreateModal()
     {
         $this->showTagModal=true;
     }
+
     public function closeTagModal()
     {
         $this->showTagModal=false;
     }
+    
     public function render()
     {
         return view('livewire.tag-index');
     }
 }
+

@@ -18,8 +18,8 @@
               <td class="px-4 py-3 text-ms border">{{ $tag->tag_name }}</td>
               <td class="px-4 py-3 text-xs border">{{ $tag->slug }}</td>
               <td class="px-4 py-3 text-sm border">
-                <button  class="inline-flex justify-center rounded-md border border-transparent bg-green-500 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 ">Edit</button>
-                <button  class="inline-flex justify-center rounded-md border border-transparent bg-red-500 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 ">Delete</button>
+                <button wire:click="showEditModal({{ $tag->id }})" class="inline-flex justify-center rounded-md border border-transparent bg-green-500 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 ">Edit</button>
+                <button wire:click="deleteTag({{ $tag->id }})" class="inline-flex justify-center rounded-md border border-transparent bg-red-500 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 ">Delete</button>
               </td>
             </tr>
             @empty
@@ -34,7 +34,11 @@
       </div>
     </div>
     <x-jet-dialog-modal wire:model="showTagModal">
-      <x-slot name="title">Create Tag</x-slot>
+      @if($tagId)
+       <x-slot name="title">Update Tag</x-slot>
+      @else
+       <x-slot name="title">Create Tag</x-slot>
+      @endif
       <x-slot name="content">
         <div class="mt-10 sm:mt-0">            
             <div class="mt-5 md:col-span-2 md:mt-0">
@@ -59,7 +63,11 @@
       </x-slot>
       <x-slot name="footer">
         <x-jet-button wire:click="closeTagModal">Cancel</x-jet-button>
+        @if ($tagId)
+        <button wire:click="updateTag" class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 mx-2">Update</button>
+        @else
         <button wire:click="createTag" class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 mx-2">CREATE</button>
+        @endif
       </x-slot>
     </x-jet-dialog-modal>
   </section>

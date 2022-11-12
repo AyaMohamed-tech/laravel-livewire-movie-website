@@ -10,6 +10,7 @@ class TagIndex extends Component
 {
     public $showTagModal=false;
     public $tagName;
+    public $tagId;
     
     public $tags = [];
 
@@ -21,6 +22,7 @@ class TagIndex extends Component
         ]);
 
         $this->reset();
+        $this->tags = Tag::all();
     }
 
     public function mount(){
@@ -29,7 +31,38 @@ class TagIndex extends Component
 
     public function showCreateModal()
     {
+        $this->reset();
+        $this->tags = Tag::all();
         $this->showTagModal=true;
+    }
+    public function showEditModal($tagId)
+    {
+
+        $this->reset(['tagName']);
+        $this->tagId=$tagId;
+        $tag = Tag::find($tagId);
+        $this->tagName = $tag->tag_name;
+        $this->showTagModal=true;
+    }
+    public function updateTag()
+    {
+        $tag = Tag::findOrFail($this->tagId);
+        $tag->update([
+         'tag_name' => $this->tagName,
+         'slug'     => Str::slug($this->tagName)
+        ]);
+        $this->reset();
+        $this->tags = Tag::all();
+        $this->showTagModal=false;
+    }
+
+    public function deleteTag($tagId)
+    {
+        $tag = Tag::findOrFail($tagId);
+        $tag->delete();
+        $this->reset();
+        $this->tags = Tag::all();
+
     }
 
     public function closeTagModal()

@@ -1,6 +1,6 @@
 <section class="container mx-auto p-6 font-mono">
     <div class="w-full flex mb-4 p-2 justify-end">
-        <x-jet-button wire:click="showCreateModal">Create Tag</x-jet-button>
+        <x-jet-button wire:click="showCreateModal">Create Tag</x-jet-button>z
     </div>
     <div class="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
       <div class="w-full overflow-x-auto">
